@@ -1,10 +1,10 @@
 class MessagesController < ApplicationController
-  before_action :set_message, only: [:show, :edit, :update, :destroy]
+  before_action :set_message, only: [:show, :destroy]
 
   # GET /messages
   # GET /messages.json
   def index
-    @send_messages = Message.where(id: current_user.id)
+    @send_messages = Message.where(user_id: current_user.id)
     @receive_messages = Message.where(user_receiver_id: current_user.id)
   end
 
@@ -21,7 +21,7 @@ class MessagesController < ApplicationController
 
   # GET /messages/1/edit
   def edit
-    dependencies_message
+    redirect_to root_path
   end
 
   # POST /messages
@@ -29,10 +29,9 @@ class MessagesController < ApplicationController
   def create
     dependencies_message
     @message = Message.new(message_params)
-
     respond_to do |format|
       if @message.save
-        format.html { redirect_to @message, notice: 'Message was successfully created.' }
+        format.html { redirect_to messages_path, notice: 'Message was successfully created.' }
         format.json { render :show, status: :created, location: @message }
       else
         format.html { render :new }
@@ -77,6 +76,6 @@ class MessagesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def message_params
-      params.require(:message).permit(:user_id, :text, :message_displayed, :user_receiver_id, :data_displayed)
+      params.require(:message).permit(:title, :user_id, :text, :message_displayed, :user_receiver_id, :data_displayed)
     end
 end

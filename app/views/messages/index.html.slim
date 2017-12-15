@@ -9,15 +9,18 @@ h3 Recebidas
   table border="1"
     thead
       tr
+        th Título
         th Texto
-        th Destinatário
+        th De
         th Dia e Hora
         th
     tbody
       - @receive_messages.each do |message|
+        - bold = "bold" if message.try(:message_displayed).nil?
         tr
-          td = message.text
-          td = message.user_receiver.nickname
+          td class="#{bold}" = message.title
+          td class="#{bold}" = message.text
+          td = message.user.nickname
           td = message.created_at
           td = link_to 'Show', message
 
@@ -28,6 +31,7 @@ h3 Enviadas
   table border="1"
     thead
       tr
+        th Título
         th Texto
         th Destinatário
         th Dia e Hora
@@ -35,8 +39,9 @@ h3 Enviadas
     tbody
       - @send_messages.each do |message|
         tr
+          td = message.title
           td = message.text
-          td = message.user_receiver_id.nickname
+          td = message.user_receiver.nickname
           td = message.created_at
           td = link_to 'Show', message
 
