@@ -17,7 +17,7 @@ h3 Recebidas
       - @receive_messages.each do |message|
         tr
           td = message.text
-          td = message.user_receiver_id.nickname
+          td = message.user_receiver.nickname
           td = message.created_at
           td = link_to 'Show', message
 
