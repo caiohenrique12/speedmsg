@@ -1,0 +1,44 @@
+p#notice
+  = notice
+h1 Messages
+
+h3 Recebidas
+- if @receive_messages.empty?
+  h4 Nenhuma mensagem por enquanto.
+- else
+  table border="1"
+    thead
+      tr
+        th Texto
+        th Destinatário
+        th Dia e Hora
+        th
+    tbody
+      - @receive_messages.each do |message|
+        tr
+          td = message.text
+          td = message.user_receiver_id.nickname
+          td = message.created_at
+          td = link_to 'Show', message
+
+h3 Enviadas
+- if @send_messages.empty?
+  h4 Nenhuma mensagem por enquanto.
+- else
+  table border="1"
+    thead
+      tr
+        th Texto
+        th Destinatário
+        th Dia e Hora
+        th
+    tbody
+      - @send_messages.each do |message|
+        tr
+          td = message.text
+          td = message.user_receiver_id.nickname
+          td = message.created_at
+          td = link_to 'Show', message
+
+  br
+= link_to 'New Message', new_message_path
