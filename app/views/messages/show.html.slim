@@ -1,0 +1,12 @@
+p#notice
+  = notice
+  
+p
+  strong Text:
+  = @message.text
+p
+  strong User send:
+  = @message.user_receiver_id.nickname
+
+= link_to 'Edit', edit_message_path(@message)
+= link_to 'Back', messages_path
