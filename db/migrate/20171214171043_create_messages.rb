@@ -4,7 +4,7 @@ class CreateMessages < ActiveRecord::Migration[5.1]
       t.references :user, foreign_key: true
       t.text :text
       t.boolean :message_displayed
-      t.integer :user_receiver_id, foreign_key: true
+      t.integer :user_receiver_id
       t.date :data_displayed
 
       t.timestamps
