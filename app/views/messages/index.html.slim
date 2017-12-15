@@ -18,7 +18,8 @@ h3 Recebidas
       - @receive_messages.each do |message|
         - bold = "bold" if message.try(:message_displayed).nil?
         tr
-          td class="#{bold}" = message.title
+          td class="#{bold}"
+            = link_to  "#{message.title}", message_path(message)
           td class="#{bold}" = message.text
           td = message.user.nickname
           td = message.created_at
