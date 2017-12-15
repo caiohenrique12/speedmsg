@@ -1,0 +1,12 @@
+doctype html
+html
+  head
+    title SpeedMsg
+    = csrf_meta_tags
+    = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload'
+    = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
+  body
+    - if user_signed_in?
+      h3 #{current_user.nickname}
+      = link_to('Sair', destroy_user_session_path, method: :delete)
+    = yield
