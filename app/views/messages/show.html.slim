@@ -1,6 +1,5 @@
 p#notice
   = notice
-
 p
   strong Text:
   = @message.text
@@ -9,3 +8,6 @@ p
   = @message.user_receiver.nickname
 
 = link_to 'Back', messages_path
+
+javascript:
+  $.ajax({url: '/messages/visualized/#{@message.id}', type: 'POST'});
