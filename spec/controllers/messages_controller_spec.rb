@@ -3,27 +3,52 @@ require 'rails_helper'
 RSpec.describe MessagesController, type: :controller do
 
   let(:valid_attributes) {
-    FactoryBot.attributes_for(:message_displayed_true)
+    FactoryBot.attributes_for(:displayed_true)
   }
 
   let(:invalid_attributes) {
-    skip("Add a hash of attributes invalid for your model")
+    {text: nil}
   }
 
   let(:valid_session) { {} }
 
+  before(:each) {
+    @user_sender = FactoryBot.create(:user_on)
+    @user_receiver = FactoryBot.create(:carlos)
+    sign_in @user_sender
+  }
+
   describe "GET #index" do
-    it "returns a success response" do
-      message = Message.create! valid_attributes
+    before(:each) {
+      @message = Message.create! valid_attributes
+    }
+
+    it "returns a success response to sender" do
       get :index
-      expect(assigns(:messages)).to eq([message])
+
+      expect(assigns(:send_messages)).to eq([@message])
+      expect(assigns(:receive_messages)).to eq([])
+    end
+
+    it "returns a success response to receiver" do
+      sign_out @user_sender
+      sign_in @user_receiver
+
+      get :index
+
+      expect(assigns(:send_messages)).to eq([])
+      expect(assigns(:receive_messages)).to eq([@message])
     end
   end
 
   describe "GET #show" do
     it "returns a success response" do
-      message = Message.create! valid_attributes
+      message = FactoryBot.create(:displayed_false)
+      expect(message).not_to be_displayed
+
       get :show, params: {id: message.to_param}
+
+      expect(assigns(:message)).to be_displayed
       expect(assigns(:message)).to eq(message)
     end
   end
@@ -31,15 +56,9 @@ RSpec.describe MessagesController, type: :controller do
   describe "GET #new" do
     it "returns a success response" do
       get :new
-      expect(assigns(:message)).to be_a_new(Message)
-    end
-  end
 
-  describe "GET #edit" do
-    it "returns a success response" do
-      message = Message.create! valid_attributes
-      get :edit, params: {id: message.to_param}
-      expect(assigns(:message)).to eq(message)
+      expect(assigns(:send_users)).to eq([@user_receiver])
+      expect(assigns(:message)).to be_a_new(Message)
     end
   end
 
@@ -47,65 +66,37 @@ RSpec.describe MessagesController, type: :controller do
     context "with valid params" do
       it "creates a new Message" do
         expect {
-          post :create, params: {message: valid_attributes}, session: valid_session
+          post :create, params: {message: valid_attributes}
         }.to change(Message, :count).by(1)
       end
 
       it "redirects to the created message" do
-        post :create, params: {message: valid_attributes}, session: valid_session
-        expect(response).to redirect_to(Message.last)
+        post :create, params: {message: valid_attributes}
+
+        expect(response).to redirect_to(messages_path)
       end
     end
 
     context "with invalid params" do
       it "returns a success response (i.e. to display the 'new' template)" do
-        post :create, params: {message: invalid_attributes}, session: valid_session
+        post :create, params: {message: invalid_attributes}
+
         expect(response).to be_success
+        expect(response).to render_template(:new)
       end
     end
   end
 
-  describe "PUT #update" do
-    context "with valid params" do
-      let(:new_attributes) {
-        skip("Add a hash of attributes valid for your model")
-      }
+  describe "DELETE #archive" do
+    it "archive a message" do
+      message = Message.create valid_attributes
+      expect(message).not_to be_archive
 
-      it "updates the requested message" do
-        message = Message.create! valid_attributes
-        put :update, params: {id: message.to_param, message: new_attributes}, session: valid_session
-        message.reload
-        skip("Add assertions for updated state")
-      end
+      delete :archive, params: {id: message.to_param}
 
-      it "redirects to the message" do
-        message = Message.create! valid_attributes
-        put :update, params: {id: message.to_param, message: valid_attributes}, session: valid_session
-        expect(response).to redirect_to(message)
-      end
-    end
-
-    context "with invalid params" do
-      it "returns a success response (i.e. to display the 'edit' template)" do
-        message = Message.create! valid_attributes
-        put :update, params: {id: message.to_param, message: invalid_attributes}, session: valid_session
-        expect(response).to be_success
-      end
-    end
-  end
-
-  describe "DELETE #destroy" do
-    it "destroys the requested message" do
-      message = Message.create! valid_attributes
-      expect {
-        delete :destroy, params: {id: message.to_param}, session: valid_session
-      }.to change(Message, :count).by(-1)
-    end
-
-    it "redirects to the messages list" do
-      message = Message.create! valid_attributes
-      delete :destroy, params: {id: message.to_param}, session: valid_session
-      expect(response).to redirect_to(messages_url)
+      expect(assigns(:message)).to be_archive
+      expect(assigns(:message)).to eq(message)
+      expect(response).to redirect_to(messages_path)
     end
   end
 

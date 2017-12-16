@@ -1,8 +1,6 @@
 Rails.application.routes.draw do
-  resources :messages do
-    collection do
-      post '/visualized/:message_id', to: 'messages#visualized', as: :visualized
-    end
+  resources :messages, except: [:edit, :update, :destroy] do
+    delete :archive, on: :member
   end
   devise_for :users
 

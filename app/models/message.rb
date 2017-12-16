@@ -4,10 +4,14 @@ class Message < ApplicationRecord
 
 
   def status_message
-    message_displayed ? "Visualizado" : "Não Visualizado"
+    displayed ? "Visualizado" : "Não Visualizado"
   end
 
   def change_status
-    self.update_columns(message_displayed: true)
+    self.update(displayed: true)
+  end
+
+  def archive_message
+    self.update(archive: true)
   end
 end
