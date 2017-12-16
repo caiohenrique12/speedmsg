@@ -5,7 +5,7 @@ RSpec.describe "messages/new", type: :view do
     assign(:message, Message.new(
       :user => nil,
       :text => "MyText",
-      :message_displayed => false,
+      :displayed => false,
       :user_receiver_id => 1
     ))
   end
@@ -19,7 +19,7 @@ RSpec.describe "messages/new", type: :view do
 
       assert_select "textarea[name=?]", "message[text]"
 
-      assert_select "input[name=?]", "message[message_displayed]"
+      assert_select "input[name=?]", "message[displayed]"
 
       assert_select "input[name=?]", "message[user_receiver_id]"
     end

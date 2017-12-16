@@ -4,8 +4,8 @@ class MessagesController < ApplicationController
   # GET /messages
   # GET /messages.json
   def index
-    @send_messages = Message.where(user_id: current_user.id)
-    @receive_messages = Message.where(user_receiver_id: current_user.id)
+    @send_messages = Message.where(user_id: current_user.id, archive: false)
+    @receive_messages = Message.where(user_receiver_id: current_user.id, archive: false)
   end
 
   # GET /messages/1
@@ -50,17 +50,17 @@ class MessagesController < ApplicationController
   private
 
     def visualized
-      unless @message.message_displayed
+      unless @message.displayed
         @message.change_status
       end
     end
 
     def set_message
-      @message = Message.find(params[:id])
+      @message = Message.where(archive: false).find(params[:id])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def message_params
-      params.require(:message).permit(:title, :user_id, :text, :message_displayed, :user_receiver_id, :data_displayed)
+      params.require(:message).permit(:title, :user_id, :text, :displayed, :user_receiver_id, :data_displayed)
     end
 end

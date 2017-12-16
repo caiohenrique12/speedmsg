@@ -5,7 +5,7 @@ RSpec.describe "messages/show", type: :view do
     @message = assign(:message, Message.create!(
       :user => nil,
       :text => "MyText",
-      :message_displayed => false,
+      :displayed => false,
       :user_receiver_id => 2
     ))
   end

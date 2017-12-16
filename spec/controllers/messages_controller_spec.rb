@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe MessagesController, type: :controller do
 
   let(:valid_attributes) {
-    FactoryBot.attributes_for(:message_displayed_true)
+    FactoryBot.attributes_for(:displayed_true)
   }
 
   let(:invalid_attributes) {
@@ -43,12 +43,12 @@ RSpec.describe MessagesController, type: :controller do
 
   describe "GET #show" do
     it "returns a success response" do
-      message = FactoryBot.create(:message_displayed_false)
-      expect(message).not_to be_message_displayed
+      message = FactoryBot.create(:displayed_false)
+      expect(message).not_to be_displayed
 
       get :show, params: {id: message.to_param}
-      
-      expect(assigns(:message)).to be_message_displayed
+
+      expect(assigns(:message)).to be_displayed
       expect(assigns(:message)).to eq(message)
     end
   end
@@ -84,6 +84,19 @@ RSpec.describe MessagesController, type: :controller do
         expect(response).to be_success
         expect(response).to render_template(:new)
       end
+    end
+  end
+
+  describe "DELETE #archive" do
+    it "archive a message" do
+      message = Message.create valid_attributes
+      expect(message).not_to be_archive
+
+      delete :archive, params: {id: message.to_param}
+
+      expect(assigns(:message)).to be_archive
+      expect(assigns(:message)).to eq(message)
+      expect(response).to redirect_to(messages_path)
     end
   end
 

@@ -17,7 +17,7 @@ h3 Recebidas
         th
     tbody
       - @receive_messages.each do |message|
-        - bold = "bold" if message.try(:message_displayed).nil?
+        - bold = "bold" if message.try(:displayed).nil?
         tr
           td class="#{bold}"
             = link_to  "#{message.title}", message_path(message)
@@ -27,13 +27,13 @@ h3 Recebidas
           td = message.status_message
           td
             = link_to 'Show', message
-            = link_to 'Arquivar', archive_message_path(message)
+            = link_to 'Arquivar', archive_message_path(message), method: :delete, remote: true
 
 h3 Enviadas
 - if @send_messages.empty?
   h4 Nenhuma mensagem por enquanto.
 - else
-  table border="1"
+  table border="1" id="message"
     thead
       tr
         th Título
@@ -43,12 +43,22 @@ h3 Enviadas
         th
     tbody
       - @send_messages.each do |message|
-        tr
+        tr.destroy
           td = message.title
           td = message.text
           td = message.user_receiver.nickname
           td = message.created_at
-          td = link_to 'Show', message
+          td
+            = link_to 'Show', message
+            = link_to 'Arquivar', archive_message_path(message), method: :delete, remote: true
 
   br
 = link_to 'New Message', new_message_path
+
+
+javascript:
+  $("#message").on("ajax:success", ".destroy", function(event, data, status, xhr) {
+    $(event.target).parent().parent().fadeOut("slow", function () {
+      $(this).remove()
+    });
+  });
