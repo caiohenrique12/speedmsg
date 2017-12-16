@@ -1,5 +1,5 @@
 class MessagesController < ApplicationController
-  before_action :set_message, only: [:show, :destroy]
+  before_action :set_message, only: [:show, :archive]
 
   # GET /messages
   # GET /messages.json
@@ -11,17 +11,13 @@ class MessagesController < ApplicationController
   # GET /messages/1
   # GET /messages/1.json
   def show
+    visualized
   end
 
   # GET /messages/new
   def new
     dependencies_message
     @message = Message.new
-  end
-
-  # GET /messages/1/edit
-  def edit
-    redirect_to root_path
   end
 
   # POST /messages
@@ -40,35 +36,11 @@ class MessagesController < ApplicationController
     end
   end
 
-  # PATCH/PUT /messages/1
-  # PATCH/PUT /messages/1.json
-  def update
-    respond_to do |format|
-      if @message.update(message_params)
-        format.html { redirect_to @message, notice: 'Message was successfully updated.' }
-        format.json { render :show, status: :ok, location: @message }
-      else
-        format.html { render :edit }
-        format.json { render json: @message.errors, status: :unprocessable_entity }
-      end
+  def archive
+    unless @message.archive
+      @message.archive_message
     end
-  end
-
-  # DELETE /messages/1
-  # DELETE /messages/1.json
-  def destroy
-    @message.destroy
-    respond_to do |format|
-      format.html { redirect_to messages_url, notice: 'Message was successfully destroyed.' }
-      format.json { head :no_content }
-    end
-  end
-
-  def visualized
-    message = Message.find(params[:message_id])
-    unless message.message_displayed
-      message.change_status
-    end
+    redirect_to messages_path, notice: 'Mensagem Arquivada com Sucesso.'
   end
 
   def dependencies_message
@@ -76,7 +48,13 @@ class MessagesController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
+
+    def visualized
+      unless @message.message_displayed
+        @message.change_status
+      end
+    end
+
     def set_message
       @message = Message.find(params[:id])
     end

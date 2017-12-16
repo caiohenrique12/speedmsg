@@ -8,6 +8,10 @@ class Message < ApplicationRecord
   end
 
   def change_status
-    self.update_columns(message_displayed: true)
+    self.update(message_displayed: true)
+  end
+
+  def archive_message
+    self.update(archive: true)
   end
 end

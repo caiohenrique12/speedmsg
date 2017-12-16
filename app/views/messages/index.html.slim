@@ -25,7 +25,9 @@ h3 Recebidas
           td = message.user.nickname
           td = message.created_at
           td = message.status_message
-          td = link_to 'Show', message
+          td
+            = link_to 'Show', message
+            = link_to 'Arquivar', archive_message_path(message)
 
 h3 Enviadas
 - if @send_messages.empty?
