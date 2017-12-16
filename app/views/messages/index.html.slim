@@ -6,7 +6,7 @@ h3 Recebidas
 - if @receive_messages.empty?
   h4 Nenhuma mensagem por enquanto.
 - else
-  table border="1"
+  table border="1" id="message"
     thead
       tr
         th Título
@@ -17,8 +17,8 @@ h3 Recebidas
         th
     tbody
       - @receive_messages.each do |message|
-        - bold = "bold" if message.try(:displayed).nil?
-        tr
+        - bold = "bold" unless message.try(:displayed)
+        tr.destroy
           td class="#{bold}"
             = link_to  "#{message.title}", message_path(message)
           td class="#{bold}" = message.text
