@@ -1,0 +1,35 @@
+header.main-header
+  nav.navbar.navbar-static-top role="navigation" style="margin: 0px;"
+    h3.text-center style="color: white;" Speed Message
+    / .navbar-custom-menu
+    /   ul.nav.navbar-nav
+        / li.dropdown.user.user-menu
+        /     a.dropdown-toggle href="#" data-toggle="dropdown"
+        /       span.hidden-xs
+        /         = current_user.nickname
+        /     ul.dropdown-menu
+        /       li.user-header
+        /         p
+        /           = current_user.nickname
+        /           small
+        /             = current_user.email
+        /       li.user-body
+        /         .row
+        /           .col-xs-4.text-center
+        /             a[href="#"]
+        /               | Followers
+        /           .col-xs-4.text-center
+        /             a[href="#"]
+        /               | Sales
+        /           .col-xs-4.text-center
+        /             a[href="#"]
+        /               | Friends
+        /       li.user-footer
+        /         .pull-left
+        /           a.btn.btn-default.btn-flat[href="#"]
+        /             | Minha Conta
+        /         .pull-right
+        /           a.btn.btn-default.btn-flat[href="#"]
+        /             | Sair
+
+      = link_to('Sair', destroy_user_session_path, method: :delete)

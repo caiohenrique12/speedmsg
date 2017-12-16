@@ -3,9 +3,12 @@ class MessagesController < ApplicationController
 
   # GET /messages
   # GET /messages.json
-  def index
-    @send_messages = Message.where(user_id: current_user.id, archive: false)
+  def inbox
     @receive_messages = Message.where(user_receiver_id: current_user.id, archive: false)
+  end
+
+  def sent
+    @send_messages = Message.where(user_id: current_user.id, archive: false)
   end
 
   # GET /messages/1
@@ -27,7 +30,7 @@ class MessagesController < ApplicationController
     @message = Message.new(message_params)
     respond_to do |format|
       if @message.save
-        format.html { redirect_to messages_path, notice: 'Message was successfully created.' }
+        format.html { redirect_to inbox_messages_path, notice: 'Messagem Enviada com Sucesso.' }
         format.json { render :show, status: :created, location: @message }
       else
         format.html { render :new }

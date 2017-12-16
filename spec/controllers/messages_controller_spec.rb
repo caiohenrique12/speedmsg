@@ -16,28 +16,25 @@ RSpec.describe MessagesController, type: :controller do
     @user_sender = FactoryBot.create(:user_on)
     @user_receiver = FactoryBot.create(:carlos)
     sign_in @user_sender
+    @message = Message.create! valid_attributes
   }
 
-  describe "GET #index" do
-    before(:each) {
-      @message = Message.create! valid_attributes
-    }
-
-    it "returns a success response to sender" do
-      get :index
-
-      expect(assigns(:send_messages)).to eq([@message])
-      expect(assigns(:receive_messages)).to eq([])
-    end
-
+  describe "GET #inbox" do
     it "returns a success response to receiver" do
       sign_out @user_sender
       sign_in @user_receiver
 
-      get :index
+      get :inbox
 
-      expect(assigns(:send_messages)).to eq([])
       expect(assigns(:receive_messages)).to eq([@message])
+    end
+  end
+
+  describe "GET #sent" do
+    it "returns a success response to sender" do
+      get :sent
+
+      expect(assigns(:send_messages)).to eq([@message])
     end
   end
 
@@ -73,7 +70,7 @@ RSpec.describe MessagesController, type: :controller do
       it "redirects to the created message" do
         post :create, params: {message: valid_attributes}
 
-        expect(response).to redirect_to(messages_path)
+        expect(response).to redirect_to(inbox_messages_path)
       end
     end
 

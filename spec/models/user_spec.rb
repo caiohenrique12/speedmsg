@@ -4,9 +4,8 @@ RSpec.describe User, type: :model do
 
   let(:users){
     User.find_by(email: 'carlos@speedmsg.com')|| FactoryBot.create(:carlos)
-    # User.find_or_create_by!(FactoryBot.attributes_for(:carlos))
-    # User.find_or_create_by!(FactoryBot.attributes_for(:felipe))
-    # User.find_or_create_by!(FactoryBot.attributes_for(:pedro))
+    User.find_by(email: 'felipe@speedmsg.com')|| FactoryBot.create(:felipe)
+    User.find_by(email: 'pedro@speedmsg.com')|| FactoryBot.create(:pedro)
   }
 
   describe "#list_users" do

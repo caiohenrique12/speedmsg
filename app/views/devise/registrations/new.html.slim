@@ -1,24 +1,30 @@
-h2
-  | Sign up
-= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f|
-  = devise_error_messages!
-  .field
-    = f.label :email
-    br
-    = f.email_field :email, autofocus: true
-  .field
-    = f.label :password
-    - if @minimum_password_length
-      em
-        | (
-        = @minimum_password_length
-        |  characters minimum)
-    br
-    = f.password_field :password, autocomplete: "off"
-  .field
-    = f.label :password_confirmation
-    br
-    = f.password_field :password_confirmation, autocomplete: "off"
-  .actions
-    = f.submit "Sign up"
-= render "devise/shared/links"
+.register-box
+  .register-logo
+    i.fa.fa-rocket.fa-4x
+  .register-box-body
+    p.login-box-msg Criar Conta
+    = form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f|
+      = devise_error_messages!
+      .form-group.has-feedback
+        .input
+          = f.text_field :nickname, autofocus: true, class: 'form-control', placeholder: "Nome ou Apelido"
+          span.form-control-feedback
+            i.fa.fa-user.bigger-110
+      .form-group.has-feedback
+        .input
+          = f.email_field :email, autofocus: true, class: 'form-control', placeholder: "Email"
+          span.form-control-feedback
+            i.fa.fa-envelope.bigger-110
+      .form-group.has-feedback
+        .input
+          = f.password_field :password, autocomplete: "off", class: 'form-control', placeholder: 'Senha'
+          span.form-control-feedback
+            i.fa.fa-lock.la-lg.bigger-110
+        - if @minimum_password_length
+          i Minimo de Caracteres #{@minimum_password_length}
+      .form-group.has-feedback
+        .input
+          = f.password_field :password_confirmation, autocomplete: "off", class: 'form-control', placeholder: 'Confirmar Senha'
+      .form-group
+        = f.submit "Cadastrar", class: 'btn btn-primary btn-flat'
+    = render "devise/shared/links"
