@@ -5,8 +5,46 @@ html
     = csrf_meta_tags
     = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload'
     = javascript_include_tag 'application'
-  body
+  body.hold-transition.skin-blue.sidebar-mini style="background-color: #ecf0f5;"
     - if user_signed_in?
-      h3 #{current_user.nickname}
-      = link_to('Sair', destroy_user_session_path, method: :delete)
-    = yield
+      = render "layouts/header"
+      section.content-header
+        h2 Bem vindo, #{current_user.nickname}
+        small #{current_user.email}
+      /! Main content
+      section.content
+        .row
+          .col-md-3
+            .box.box-solid
+              .box-header.with-border
+                h3.box-title Folders
+                .box-tools
+                  button.btn.btn-box-tool data-widget="collapse" type="button"
+                    i.fa.fa-minus
+              .box-body.no-padding
+                ul.nav.nav-pills.nav-stacked
+                  li.active
+                    a href="/messages/inbox"
+                      i.fa.fa-inbox
+                      ' Inbox
+                      span.label.label-primary.pull-right 12
+                  li
+                    a href="/messages/sent"
+                      i.fa.fa-envelope-o
+                      ' Enviadas
+                  li
+                    a href="#"
+                      i.fa.fa-trash-o
+                      ' Arquivadas
+                  li
+                    = link_to('Sair', destroy_user_session_path, method: :delete)
+          .col-md-9
+            .box.box-primary
+              .box-header.with-border
+                p#notice
+                  = notice
+                = yield
+    - else
+      p#notice
+        = notice
+      = yield

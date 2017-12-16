@@ -1,13 +1,12 @@
-p#notice
-  = notice
-p
-  strong Text:
-  = @message.text
-p
-  strong User send:
-  = @message.user_receiver.nickname
+.box-header.with-border
+  h3.box-title Ler Mensagem
+.box-body.no-padding
+  .mailbox-read-info
+    h2 #{@message.title}
+    small De: #{@message.user_receiver.email}
+    span.mailbox-read-time.pull-right #{@message.created_at}
+  .mailbox-read-message
+    h2 #{@message.text}
 
-= link_to 'Back', messages_path
-
-javascript:
-  $.ajax({url: '/messages/visualized/#{@message.id}', type: 'POST'});
+.box-footer
+  = link_to 'Voltar', inbox_messages_path, class: 'btn btn-default btn-flat'

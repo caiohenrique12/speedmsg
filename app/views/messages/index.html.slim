@@ -1,7 +1,3 @@
-p#notice
-  = notice
-h1 Messages
-
 h3 Recebidas
 - if @receive_messages.empty?
   h4 Nenhuma mensagem por enquanto.
@@ -52,7 +48,7 @@ h3 Enviadas
             = link_to 'Show', message
             = link_to 'Arquivar', archive_message_path(message), method: :delete, remote: true
 
-  br
+br
 = link_to 'New Message', new_message_path
 
 
