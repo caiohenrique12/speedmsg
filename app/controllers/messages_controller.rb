@@ -64,6 +64,13 @@ class MessagesController < ApplicationController
     end
   end
 
+  def visualized
+    message = Message.find(params[:message_id])
+    unless message.message_displayed
+      message.change_status
+    end
+  end
+
   def dependencies_message
     @send_users = User.list_users current_user.id
   end

@@ -13,6 +13,7 @@ h3 Recebidas
         th Texto
         th De
         th Dia e Hora
+        th Status
         th
     tbody
       - @receive_messages.each do |message|
@@ -23,6 +24,7 @@ h3 Recebidas
           td class="#{bold}" = message.text
           td = message.user.nickname
           td = message.created_at
+          td = message.status_message
           td = link_to 'Show', message
 
 h3 Enviadas

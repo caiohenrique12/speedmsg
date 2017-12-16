@@ -35,5 +35,9 @@ RSpec.describe MessagesController, type: :routing do
       expect(:delete => "/messages/1").to route_to("messages#destroy", :id => "1")
     end
 
+    it "routes to #visualized" do
+      expect(:post => "/messages/visualized/1").to route_to("messages#visualized", :message_id => "1")
+    end
+
   end
 end
