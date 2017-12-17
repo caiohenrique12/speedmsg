@@ -9,30 +9,46 @@ RSpec.describe Message, type: :model do
   it { is_expected.to belong_to(:user).class_name('User') }
   it { is_expected.to belong_to(:user_receiver).class_name('User') }
 
+  before(:each) do
+    @displayed_false = Message.find_or_create_by!(FactoryBot.attributes_for(:displayed_false))
+    @displayed_true = Message.find_or_create_by!(FactoryBot.attributes_for(:displayed_true))
+  end
+
   describe "#status_message" do
     it "displayed show 'Não Visualizado' :unlesss" do
       message = Message.find_or_create_by!(FactoryBot.attributes_for(:displayed_false))
+
       expect(message.status_message).to eq "Não Visualizado"
     end
     it "displayed show 'Visualizado' :if" do
       message = Message.find_or_create_by!(FactoryBot.attributes_for(:displayed_true))
+
       expect(message.status_message).to eq "Visualizado"
     end
   end
 
   describe "#change_status" do
     it "change displayed for true" do
-      message = Message.find_or_create_by!(FactoryBot.attributes_for(:displayed_false))
-      message.change_status
-      expect(message.displayed).to be_truthy
+      @displayed_false.change_status
+
+      expect(@displayed_false.displayed).to be_truthy
     end
   end
 
   describe "#archive_message" do
     it "archive of message" do
-      message = Message.find_or_create_by!(FactoryBot.attributes_for(:displayed_false))
-      message.archive_message
-      expect(message.archive).to be_truthy
+      @displayed_false.archive_message
+
+      expect(@displayed_false.archive).to be_truthy
     end
   end
+
+  describe "#update_date_view" do
+    it "update date_view for messages displayed" do
+      @displayed_false.change_status
+
+      expect(@displayed_false.date_view.strftime("%Y-%m-%d")).to eq DateTime.now.strftime("%Y-%m-%d")
+    end
+  end
+
 end

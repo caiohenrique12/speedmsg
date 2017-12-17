@@ -22,4 +22,5 @@
             td.mailbox-star
               = link_to  "#{message.title}", message_path(message)
             td = message.text
+            td Para: #{message.user_receiver.nickname}
             td = message.created_at
