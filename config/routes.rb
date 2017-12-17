@@ -3,8 +3,8 @@ Rails.application.routes.draw do
     collection do
       get "inbox"
       get "sent"
+      post "archive"
     end
-    put "archive", on: :member
   end
   devise_for :users
 
