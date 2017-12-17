@@ -21,7 +21,7 @@ ActiveRecord::Schema.define(version: 20171214171043) do
     t.text "text"
     t.boolean "displayed", default: false
     t.integer "user_receiver_id"
-    t.date "data_displayed"
+    t.datetime "date_view"
     t.boolean "archive", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

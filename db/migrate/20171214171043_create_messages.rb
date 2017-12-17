@@ -6,7 +6,7 @@ class CreateMessages < ActiveRecord::Migration[5.1]
       t.text :text
       t.boolean :displayed, default: false
       t.integer :user_receiver_id
-      t.date :data_displayed
+      t.datetime :date_view
       t.boolean :archive, default: false
 
       t.timestamps

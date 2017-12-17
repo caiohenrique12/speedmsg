@@ -10,7 +10,7 @@ FactoryBot.define do
     user_receiver_id {
       User.find_by(email: 'carlos@speedmsg.com').try(:id) || FactoryBot.create(:carlos).id
     }
-    data_displayed "2017-12-14"
+    date_view "2017-12-14"
     archive false
   end
 
@@ -24,7 +24,7 @@ FactoryBot.define do
     user_receiver_id {
       User.find_by(email: 'carlos@speedmsg.com').try(:id) || FactoryBot.create(:carlos).id
     }
-    data_displayed "2017-12-13"
+    date_view "2017-12-13"
     archive false
   end
 end
