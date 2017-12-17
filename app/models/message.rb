@@ -2,6 +2,7 @@ class Message < ApplicationRecord
   belongs_to :user, class_name: 'User'
   belongs_to :user_receiver, class_name: 'User'
 
+  validates_presence_of :title, :text, :user_receiver_id, 
 
   def status_message
     displayed ? "Visualizado" : "Não Visualizado"

@@ -11,6 +11,7 @@ FactoryBot.define do
       User.find_by(email: 'carlos@speedmsg.com').try(:id) || FactoryBot.create(:carlos).id
     }
     data_displayed "2017-12-14"
+    archive false
   end
 
   factory :displayed_true, class: Message  do
@@ -24,5 +25,6 @@ FactoryBot.define do
       User.find_by(email: 'carlos@speedmsg.com').try(:id) || FactoryBot.create(:carlos).id
     }
     data_displayed "2017-12-13"
+    archive false
   end
 end
