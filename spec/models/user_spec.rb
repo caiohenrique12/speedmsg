@@ -8,6 +8,8 @@ RSpec.describe User, type: :model do
     User.find_by(email: 'pedro@speedmsg.com')|| FactoryBot.create(:pedro)
   }
 
+  it { is_expected.to have_many(:messages).class_name('Message')}
+
   describe "#list_users" do
     before {
       users
