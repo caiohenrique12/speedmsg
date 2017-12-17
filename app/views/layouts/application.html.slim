@@ -23,12 +23,14 @@ html
                     i.fa.fa-minus
               .box-body.no-padding
                 ul.nav.nav-pills.nav-stacked
-                  li.active
+                  - active_inbox = "active" if controller.action_name == 'inbox'
+                  li class="#{active_inbox}"
                     a href="/messages/inbox"
                       i.fa.fa-inbox
                       ' Inbox
-                      span.label.label-primary.pull-right 12
-                  li
+                      span.label.label-primary.pull-right #{current_user.count_messages}
+                  - active_sent = "active" if controller.action_name == 'sent'
+                  li class="#{active_sent}"
                     a href="/messages/sent"
                       i.fa.fa-envelope-o
                       ' Enviadas
