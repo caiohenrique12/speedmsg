@@ -4,11 +4,11 @@ class MessagesController < ApplicationController
   # GET /messages
   # GET /messages.json
   def inbox
-    @receive_messages = Message.where(user_receiver_id: current_user.id, archive: false)
+    @receive_messages = Message.where(user_receiver_id: current_user.id, archive: false).order(created_at: :desc)
   end
 
   def sent
-    @send_messages = Message.where(user_id: current_user.id, archive: false)
+    @send_messages = Message.where(user_id: current_user.id, archive: false).order(created_at: :desc)
   end
 
   # GET /messages/1

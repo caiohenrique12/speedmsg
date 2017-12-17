@@ -22,6 +22,4 @@
             td.mailbox-star
               = link_to  "#{message.title}", message_path(message)
             td = message.text
-            td.mailbox-subject = message.user.nickname
-            td = message.status_message
-            td.mailbox-date 5 mins ago
+            td = message.created_at
