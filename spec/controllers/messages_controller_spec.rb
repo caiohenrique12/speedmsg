@@ -20,7 +20,7 @@ RSpec.describe MessagesController, type: :controller do
   }
 
   describe "GET #inbox" do
-    it "returns a success response to receiver" do
+    it "return a success response to receiver" do
       sign_out @user_sender
       sign_in @user_receiver
 
@@ -31,7 +31,7 @@ RSpec.describe MessagesController, type: :controller do
   end
 
   describe "GET #sent" do
-    it "returns a success response to sender" do
+    it "return sent messages" do
       get :sent
 
       expect(assigns(:send_messages)).to eq([@message])
@@ -39,7 +39,7 @@ RSpec.describe MessagesController, type: :controller do
   end
 
   describe "GET #show" do
-    it "returns a success response" do
+    it "return incoming messages" do
       message = FactoryBot.create(:displayed_false)
       expect(message).not_to be_displayed
 
@@ -47,6 +47,16 @@ RSpec.describe MessagesController, type: :controller do
 
       expect(assigns(:message)).to be_displayed
       expect(assigns(:message)).to eq(message)
+    end
+  end
+
+  describe "GET #archives" do
+    it "return archived messages" do
+      @message.archive_message
+
+      get :archives
+
+      expect(assigns(:archives)).to eq([@message])
     end
   end
 
@@ -84,16 +94,21 @@ RSpec.describe MessagesController, type: :controller do
     end
   end
 
-  describe "DELETE #archive" do
-    it "archive a message" do
-      message = Message.create valid_attributes
-      expect(message).not_to be_archive
+  describe "POST #archive" do
+    it "archive a message when receiver" do
+      expect(@message).not_to be_archive
 
-      delete :archive, params: {id: message.to_param}
+      post :archive, params: {messages: [@message.id.to_param], action_origin: "inbox_message"}
 
-      expect(assigns(:message)).to be_archive
-      expect(assigns(:message)).to eq(message)
-      expect(response).to redirect_to(messages_path)
+      expect(response).to redirect_to(inbox_messages_path)
+    end
+
+    it "archive a message when sent" do
+      expect(@message).not_to be_archive
+
+      post :archive, params: {messages: [@message.id.to_param], action_origin: "sent_message"}
+
+      expect(response).to redirect_to(sent_messages_path)
     end
   end
 
