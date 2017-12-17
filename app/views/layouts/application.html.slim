@@ -34,8 +34,9 @@ html
                     a href="/messages/sent"
                       i.fa.fa-envelope-o
                       ' Enviadas
-                  li
-                    a href="#"
+                  - active_archives = "active" if controller.action_name == 'archives'
+                  li class="#{active_archives}"
+                    a href="/messages/archives"
                       i.fa.fa-trash-o
                       ' Arquivadas
                   li

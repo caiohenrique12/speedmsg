@@ -11,6 +11,10 @@ class MessagesController < ApplicationController
     @send_messages = Message.where(user_id: current_user.id, archive: false).order(created_at: :desc)
   end
 
+  def archives
+    @archives = Message.where(archive: true).order(created_at: :desc)
+  end
+
   # GET /messages/1
   # GET /messages/1.json
   def show
@@ -77,7 +81,7 @@ class MessagesController < ApplicationController
     end
 
     def set_message
-      @message = Message.where(archive: false).find(params[:id])
+      @message = Message.find(params[:id])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

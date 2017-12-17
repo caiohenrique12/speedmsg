@@ -3,6 +3,7 @@ Rails.application.routes.draw do
     collection do
       get "inbox"
       get "sent"
+      get "archives"
       post "archive"
     end
   end

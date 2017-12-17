@@ -11,6 +11,10 @@ RSpec.describe MessagesController, type: :routing do
       expect(:get => "/messages/sent").to route_to("messages#sent")
     end
 
+    it "routes to #archives" do
+      expect(:get => "/messages/archives").to route_to("messages#archives")
+    end
+
     it "routes to #new" do
       expect(:get => "/messages/new").to route_to("messages#new")
     end
@@ -24,7 +28,7 @@ RSpec.describe MessagesController, type: :routing do
     end
 
     it "routes to #archive" do
-      expect(:put => "/messages/1/archive").to route_to("messages#archive", :id => "1")
+      expect(:post => "/messages/archive").to route_to("messages#archive")
     end
 
   end
