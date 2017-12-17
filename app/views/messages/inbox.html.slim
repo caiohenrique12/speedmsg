@@ -4,30 +4,38 @@
   - else
     h3.box-title Inbox
     hr
-    .box-body.no-padding
-      .mailbox-controls
-    button.btn.btn-default.btn-sm.checkbox-toggle type="button"
-      i.fa.fa-square-o
-    .btn-group
-      button.btn.btn-default.btn-sm type="button"
-        i.fa.fa-trash-o
-    /! /.btn-group
-    button.btn.btn-default.btn-sm type="button"
-      i.fa.fa-refresh
 
-    table.table.table-hover.table-striped
-      tbody
-        - @receive_messages.each do |message|
-          - bold = "bold" unless message.try(:displayed)
-          tr
-            td
-              input type="checkbox" /
-            td.mailbox-subject = message.user.nickname
-            td.mailbox-star
-              = link_to  "#{message.title}", message_path(message)
-            td class="mailbox-name #{bold}" = message.text
-            td = message.status_message
-            td = message.created_at
+    = form_tag archive_messages_path, method: :post do
+      .box-body.no-padding
+        .mailbox-controls
+      button.btn.btn-default.btn-sm.checkbox-toggle type="button"
+        i.fa.fa-square-o
+      .btn-group
+        button.btn.btn-default.btn-sm type="submit" data-remote="true"
+          i.fa.fa-trash-o
+      /! /.btn-group
+      button.btn.btn-default.btn-sm type="button"
+        i.fa.fa-refresh
+
+      = hidden_field_tag "action_origin", "inbox_message"
+      table.table.table-hover.table-striped id="message"
+        tbody
+          - @receive_messages.each do |message|
+            - bold = "bold" unless message.try(:displayed)
+            tr.destroy
+              td = check_box_tag "messages[]", message.id
+              td.mailbox-subject = message.user.nickname
+              td class="mailbox-name title #{bold}" = link_to  "#{message.title}", message_path(message)
+              td class="mailbox-name #{bold}" = message.text[1..20]
+              td = message.status_message
+              td = message.created_at
   br
   .form-group
     = link_to 'Nova Messagem', new_message_path, class: 'btn btn-primary btn-flat'
+
+javascript:
+  $("#message").on("ajax:success", ".destroy", function(event, data, status, xhr) {
+    $(event.target).parent().parent().fadeOut("slow", function () {
+      $(this).remove()
+    });
+  });

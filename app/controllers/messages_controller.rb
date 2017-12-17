@@ -1,5 +1,5 @@
 class MessagesController < ApplicationController
-  before_action :set_message, only: [:show, :archive]
+  before_action :set_message, only: [:show]
 
   # GET /messages
   # GET /messages.json
@@ -40,10 +40,28 @@ class MessagesController < ApplicationController
   end
 
   def archive
-    unless @message.archive
-      @message.archive_message
+    if params[:messages]
+      params[:messages].each do |id|
+        message = Message.find(id.to_i)
+        unless message.archive
+          message.archive_message
+        end
+      end
+
+      params[:messages].count > 1 ? texto = "Mensagens" : texto = "Mensagem"
+
+      if params[:action_origin] == "inbox_message"
+        redirect_to :inbox_messages, notice: "#{texto} Arquivada com Sucesso."
+      else
+        redirect_to :sent_messages, notice: "#{texto} Arquivada com Sucesso."
+      end
+    else
+      if params[:action_origin] == "inbox_message"
+        redirect_to :inbox_messages, notice: "Escolha uma mensagem para arquivar."
+      else
+        redirect_to :sent_messages, notice: "Escolha uma mensagem para arquivar."
+      end
     end
-    redirect_to messages_path, notice: 'Mensagem Arquivada com Sucesso.'
   end
 
   def dependencies_message

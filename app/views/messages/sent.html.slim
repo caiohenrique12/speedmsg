@@ -3,24 +3,26 @@
     h4 Nenhuma mensagem por enquanto.
   - else
     h3.box-title Enviadas
-    .box-body.no-padding
-      .mailbox-controls
-    button.btn.btn-default.btn-sm.checkbox-toggle type="button"
-      i.fa.fa-square-o
-    .btn-group
+    hr
+
+    = form_tag archive_messages_path, method: :post do
+      .box-body.no-padding
+        .mailbox-controls
+      button.btn.btn-default.btn-sm.checkbox-toggle type="button"
+        i.fa.fa-square-o
+      .btn-group
+        button.btn.btn-default.btn-sm type="submit" data-remote="true"
+          i.fa.fa-trash-o
+      /! /.btn-group
       button.btn.btn-default.btn-sm type="button"
-        i.fa.fa-trash-o
-    /! /.btn-group
-    button.btn.btn-default.btn-sm type="button"
-      i.fa.fa-refresh
-    table.table.table-hover.table-striped
-      tbody
-        - @send_messages.each do |message|
-          tr
-            td
-              input type="checkbox"
-            td.mailbox-star
-              = link_to  "#{message.title}", message_path(message)
-            td = message.text
-            td Para: #{message.user_receiver.nickname}
-            td = message.created_at
+        i.fa.fa-refresh
+      = hidden_field_tag "action_origin", "sent_message"
+      table.table.table-hover.table-striped
+        tbody
+          - @send_messages.each do |message|
+            tr
+              td = check_box_tag "messages[]", message.id
+              td.mailbox-name.title = link_to  "#{message.title}", message_path(message)
+              td.mailbox-name = message.text[1..20]
+              td Para: #{message.user_receiver.nickname}
+              td = message.created_at
