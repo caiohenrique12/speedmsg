@@ -23,6 +23,7 @@ ActiveRecord::Schema.define(version: 20171214171043) do
     t.integer "user_receiver_id"
     t.datetime "date_view"
     t.boolean "archive", default: false
+    t.datetime "date_archived"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_messages_on_user_id"

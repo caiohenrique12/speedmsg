@@ -51,4 +51,12 @@ RSpec.describe Message, type: :model do
     end
   end
 
+  describe "#update_date_archived" do
+    it "update date_archived for messages archived" do
+      @displayed_false.archive_message
+
+      expect(@displayed_false.date_archived.strftime("%Y-%m-%d")).to eq DateTime.now.strftime("%Y-%m-%d")
+    end
+  end
+
 end
