@@ -12,7 +12,7 @@ class MessagesController < ApplicationController
   end
 
   def archives
-    @archives = Message.where(user_receiver_id: current_user.id).order(created_at: :desc)
+    @archives = Message.where(user_receiver_id: current_user.id, archive: true).order(created_at: :desc)
   end
 
   # GET /messages/1
@@ -75,7 +75,8 @@ class MessagesController < ApplicationController
   private
 
     def visualized
-      unless @message.displayed && current_user.id != @message.user_id
+      if !@message.displayed && !(current_user.id == @message.user_id)
+        byebug
         @message.change_status
       end
     end
