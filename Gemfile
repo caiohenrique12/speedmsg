@@ -36,6 +36,7 @@ gem 'jbuilder', '~> 2.5'
 gem 'devise'
 gem 'slim'
 gem 'html2slim'
+gem "rails_12factor"
 
 group :production, :development do
   gem 'jquery-rails', '~> 4.0', '>= 4.0.5'
