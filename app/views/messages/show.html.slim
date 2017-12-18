@@ -2,14 +2,18 @@
   h3.box-title Ler Mensagem
 .box-body.no-padding
   .mailbox-read-info
-    p
-      small De: #{@message.user.email}
+    - if current_user.id == @message.user_id
+      p
+        small Para: #{@message.user_receiver.email}
+    - else
+      p
+        small De: #{@message.user.email}
     h2 #{@message.title}
     span.mailbox-read-time.pull-right #{@message.created_at.strftime("%d/%m/%Y - %H:%M")}
   .mailbox-read-message
     h2 #{@message.text}
 
-    - if @message.date_archived
+    - if @message.date_archived && current_user.id == @message.user_receiver_id
       small Arquivado em #{@message.date_archived}
 
 .box-footer
