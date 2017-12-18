@@ -99,6 +99,7 @@ GEM
       nokogiri (>= 1.5.9)
     mail (2.7.0)
       mini_mime (>= 0.1.1)
+    messengerjs-rails (1.4.1)
     method_source (0.9.0)
     mini_mime (1.0.0)
     mini_portile2 (2.3.0)
@@ -233,6 +234,7 @@ DEPENDENCIES
   jbuilder (~> 2.5)
   jquery-rails (~> 4.0, >= 4.0.5)
   listen (>= 3.0.5, < 3.2)
+  messengerjs-rails (~> 1.4.1)
   pg
   puma (~> 3.7)
   rails (~> 5.1.4)
