@@ -4,7 +4,7 @@ Env Development
 https://speedmsg-dev.herokuapp.com/users/sign_in
 
 Env Production
-https://speedmsg-dev.herokuapp.com/users/sign_in
+https://speedmsg.herokuapp.com/users/sign_in
 
 ## Access
 
@@ -24,4 +24,5 @@ felipe@speedmsg.com
 - Pg (libpq-dev)
 
 ## Environments
+
 
