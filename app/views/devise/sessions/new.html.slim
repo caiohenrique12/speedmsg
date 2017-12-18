@@ -1,0 +1,26 @@
+.login-box
+  .login-logo
+    i.fa.fa-rocket.fa-4x
+    h3 Speed[Message]
+  .login-box-body
+    p.login-box-msg Digite seu usuário e senha para continuar
+    = form_for(resource, as: resource_name, url: session_path(resource_name)) do |f|
+      .form-group.has-feedback
+        .input
+          = f.email_field :email, autofocus: true, class: "form-control", placeholder: 'Email'
+          span.form-control-feedback
+            i.fa.fa-envelope.bigger-110
+      .form-group.has-feedback
+        .input
+          = f.password_field :password, autocomplete: "off", class: "form-control", placeholder: 'Senha'
+          span.form-control-feedback
+            i.fa.fa-lock.fa-lg.bigger-110
+      - if devise_mapping.rememberable?
+        .row
+          .col-xs-8
+            .checkbox.icheck
+              = f.check_box :remember_me
+              = f.label :remember_me, "Lembrar de mim"
+      .form-group
+        = f.submit "Entrar", class: 'btn btn-primary btn-flat'
+      = render "devise/shared/links"

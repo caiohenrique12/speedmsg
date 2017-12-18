@@ -1,0 +1,16 @@
+.box-header.with-border
+  h3.box-title Ler Mensagem
+.box-body.no-padding
+  .mailbox-read-info
+    p
+      small De: #{@message.user.email}
+    h2 #{@message.title}
+    span.mailbox-read-time.pull-right #{@message.created_at.strftime("%d/%m/%Y - %H:%M")}
+  .mailbox-read-message
+    h2 #{@message.text}
+
+    - if @message.date_archived
+      small Arquivado em #{@message.date_archived}
+
+.box-footer
+  = link_to 'Voltar', inbox_messages_path, class: 'btn btn-default btn-flat'

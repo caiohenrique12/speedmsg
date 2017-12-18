@@ -1,0 +1,24 @@
+= form_with(model: message, local: true) do |form|
+
+  = form.hidden_field :user_id, value: current_user.id
+
+  .form-group
+    = form.label :title, "Título"
+    = form.text_field :title, class: 'form-control'
+    = error_tag @message, :title
+
+  .form-group
+    = form.label :text, "Texto"
+    = form.text_area :text, id: :message_text, class: 'form-control'
+    = error_tag @message, :text
+
+  .form-group
+    = form.label :user_receiver_id, "Destinatário"
+    = form.select :user_receiver_id, options_from_collection_for_select(@send_users, :id, :nickname), {prompt: 'Por Favor Selecione'}, {class: 'form-control'}
+    = error_tag @message, :user_receiver_id
+
+  .box-footer
+    .row
+      .form-group
+        = form.submit "Enviar", class: 'btn btn-primary btn-flat'
+        =<> link_to "Cancelar", inbox_messages_path, class: 'btn btn-default btn-flat'
