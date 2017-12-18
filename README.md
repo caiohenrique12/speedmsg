@@ -1,24 +1,27 @@
-# README
+# SPEEDMSG
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Env Development 
+https://speedmsg-dev.herokuapp.com/users/sign_in
 
-Things you may want to cover:
+Env Production
+https://speedmsg-dev.herokuapp.com/users/sign_in
 
-* Ruby version
+## Access
 
-* System dependencies
+pedro@speedmsg.com
+123123
 
-* Configuration
+carlos@speedmsg.com
+123123
 
-* Database creation
+felipe@speedmsg.com
+123123
 
-* Database initialization
+## Dependencies
 
-* How to run the test suite
+- Rails 5.X.X (libxslt-dev, libxml2-dev, build-essential ,libgmp3-dev )
+- Ruby 2.4.X
+- Pg (libpq-dev)
 
-* Services (job queues, cache servers, search engines, etc.)
+## Environments
 
-* Deployment instructions
-
-* ...
