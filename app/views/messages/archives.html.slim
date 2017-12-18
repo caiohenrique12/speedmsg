@@ -8,11 +8,10 @@
       tbody
         - @archives.each do |message|
           tr.destroy
-            td.mailbox-subject = message.user.nickname
+            td.mailbox-subject = message.user.nickname == current_user.nickname ? "Você" : message.user.nickname
             td.mailbox-name.title = link_to "#{message.title}", message_path(message)
-            td.mailbox-name = message.text[1..20]
-            td = message.status_message
-            td = message.created_at
+            td Criado em #{message.created_at}
+            td Arquivado em #{message.date_archived}
     br
     .form-group
       = link_to 'Voltar', inbox_messages_path, class: 'btn btn-default btn-flat'

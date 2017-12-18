@@ -13,16 +13,16 @@ RSpec.describe MessagesController, type: :controller do
   let(:valid_session) { {} }
 
   before(:each) {
-    @user_sender = FactoryBot.create(:user_on)
-    @user_receiver = FactoryBot.create(:carlos)
-    sign_in @user_sender
+    @caio = FactoryBot.create(:user_on)
+    @carlos = FactoryBot.create(:carlos)
+    sign_in @caio
     @message = Message.create! valid_attributes
   }
 
   describe "GET #inbox" do
     it "return a success response to receiver" do
-      sign_out @user_sender
-      sign_in @user_receiver
+      sign_out @caio
+      sign_in @carlos
 
       get :inbox
 
@@ -52,6 +52,8 @@ RSpec.describe MessagesController, type: :controller do
 
   describe "GET #archives" do
     it "return archived messages" do
+      sign_out @caio
+      sign_in @carlos
       @message.archive_message
 
       get :archives
@@ -64,7 +66,7 @@ RSpec.describe MessagesController, type: :controller do
     it "returns a success response" do
       get :new
 
-      expect(assigns(:send_users)).to eq([@user_receiver])
+      expect(assigns(:send_users)).to eq([@carlos])
       expect(assigns(:message)).to be_a_new(Message)
     end
   end
@@ -101,14 +103,6 @@ RSpec.describe MessagesController, type: :controller do
       post :archive, params: {messages: [@message.id.to_param], action_origin: "inbox_message"}
 
       expect(response).to redirect_to(inbox_messages_path)
-    end
-
-    it "archive a message when sent" do
-      expect(@message).not_to be_archive
-
-      post :archive, params: {messages: [@message.id.to_param], action_origin: "sent_message"}
-
-      expect(response).to redirect_to(sent_messages_path)
     end
   end
 

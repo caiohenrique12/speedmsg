@@ -3,6 +3,7 @@ class Message < ApplicationRecord
   belongs_to :user_receiver, class_name: 'User'
 
   after_update :update_date_view, if: :displayed?
+  after_update :update_date_archived, if: :archive?
 
   validates_presence_of :title, :text, :user_receiver_id,
 
@@ -20,5 +21,9 @@ class Message < ApplicationRecord
 
   def update_date_view
     self.update_column(:date_view, DateTime.now)
+  end
+
+  def update_date_archived
+    self.update_column(:date_archived, DateTime.now)
   end
 end

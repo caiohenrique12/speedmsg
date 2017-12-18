@@ -26,7 +26,6 @@
               td = check_box_tag "messages[]", message.id
               td.mailbox-subject = message.user.nickname
               td class="mailbox-name title #{bold}" = link_to  "#{message.title}", message_path(message)
-              td class="mailbox-name #{bold}" = message.text[1..20]
               td = message.status_message
               td = message.created_at
   br
