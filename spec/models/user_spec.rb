@@ -27,7 +27,7 @@ RSpec.describe User, type: :model do
   end
 
   describe "#count_messages_receiver" do
-    it "return number of message not displayed" do
+    it "return number of message not visualized" do
       Message.find_or_create_by!(FactoryBot.attributes_for(:message_receiver))
 
       expect(@user_on.count_messages_receiver).to eq 1

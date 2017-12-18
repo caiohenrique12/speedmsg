@@ -13,15 +13,12 @@
       .btn-group
         button.btn.btn-default.btn-sm type="submit"
           i.fa.fa-trash-o
-      /! /.btn-group
-      button.btn.btn-default.btn-sm type="button"
-        i.fa.fa-refresh
 
       = hidden_field_tag "action_origin", "inbox_message"
       table.table.table-hover.table-striped
         tbody
           - @receive_messages.each do |message|
-            - bold = "bold" unless message.try(:displayed)
+            - bold = "bold" unless message.try(:visualized)
             tr
               td = check_box_tag "messages[]", message.id, false, class: 'destroy'
               td.mailbox-subject = message.user.nickname
