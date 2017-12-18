@@ -9,7 +9,7 @@ html
     - if user_signed_in?
       = render "layouts/header"
       section.content-header
-        h2 Bem vindo, #{current_user.nickname}
+        h4 Bem vindo, #{current_user.nickname}
         small #{current_user.email}
       /! Main content
       section.content

@@ -9,7 +9,7 @@
       .box-body.no-padding
         .mailbox-controls
       button.btn.btn-default.btn-sm.checkbox-toggle type="button"
-        i.fa.fa-square-o
+        i.fa.fa-check-square-o
       .btn-group
         button.btn.btn-default.btn-sm type="submit" data-remote="true"
           i.fa.fa-trash-o
@@ -25,4 +25,6 @@
               td.mailbox-name.title = link_to  "#{message.title}", message_path(message)
               td.mailbox-name = message.text[1..20]
               td Para: #{message.user_receiver.nickname}
-              td = message.created_at
+              td = message.created_at.strftime("%d/%m/%Y - %H:%M")
+
+    = link_to "Voltar", inbox_messages_path, class: 'btn btn-default btn-flat'

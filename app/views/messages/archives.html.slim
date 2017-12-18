@@ -12,7 +12,7 @@
             td.mailbox-name.title = link_to "#{message.title}", message_path(message)
             td.mailbox-name = message.text[1..20]
             td = message.status_message
-            td = message.created_at
+            td = message.created_at.strftime("%d/%m/%Y - %H:%M")
     br
     .form-group
       = link_to 'Voltar', inbox_messages_path, class: 'btn btn-default btn-flat'
