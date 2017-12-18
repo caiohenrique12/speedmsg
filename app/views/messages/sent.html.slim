@@ -12,7 +12,7 @@
           tr
             td.mailbox-name.title = link_to  "#{message.title}", message_path(message)
             td Para: #{message.user_receiver.nickname}
-            td = message.created_at
+            td Criado em #{message.created_at.strftime("%d/%m/%Y - %H:%M")}
     br
     .form-group
       = link_to "Voltar", inbox_messages_path, class: 'btn btn-default btn-flat'
