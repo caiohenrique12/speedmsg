@@ -28,7 +28,7 @@ html
                     a href="/messages/inbox"
                       i.fa.fa-inbox
                       ' Inbox
-                      span.label.label-primary.pull-right #{current_user.count_messages}
+                      span.label.label-primary.pull-right #{current_user.count_messages_receiver}
                   - active_sent = "active" if controller.action_name == 'sent'
                   li class="#{active_sent}"
                     a href="/messages/sent"
