@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe MessagesController, type: :controller do
 
   let(:valid_attributes) {
-    FactoryBot.attributes_for(:displayed_true)
+    FactoryBot.attributes_for(:visualized_true)
   }
 
   let(:invalid_attributes) {
@@ -40,12 +40,14 @@ RSpec.describe MessagesController, type: :controller do
 
   describe "GET #show" do
     it "return incoming messages" do
-      message = FactoryBot.create(:displayed_false)
-      expect(message).not_to be_displayed
+      sign_out @caio
+      sign_in @carlos
+      message = FactoryBot.create(:visualized_false)
+      expect(message).not_to be_visualized
 
       get :show, params: {id: message.to_param}
 
-      expect(assigns(:message)).to be_displayed
+      expect(assigns(:message)).to be_visualized
       expect(assigns(:message)).to eq(message)
     end
   end

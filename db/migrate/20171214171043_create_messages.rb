@@ -4,7 +4,7 @@ class CreateMessages < ActiveRecord::Migration[5.1]
       t.references :user, foreign_key: true
       t.string :title
       t.text :text
-      t.boolean :displayed, default: false
+      t.boolean :visualized, default: false
       t.integer :user_receiver_id
       t.datetime :date_view
       t.boolean :archive, default: false

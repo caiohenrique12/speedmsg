@@ -19,7 +19,7 @@ ActiveRecord::Schema.define(version: 20171214171043) do
     t.bigint "user_id"
     t.string "title"
     t.text "text"
-    t.boolean "displayed", default: false
+    t.boolean "visualized", default: false
     t.integer "user_receiver_id"
     t.datetime "date_view"
     t.boolean "archive", default: false

@@ -8,7 +8,7 @@ class MessagesController < ApplicationController
   end
 
   def sent
-    @send_messages = Message.where(user_id: current_user.id, archive: false).order(created_at: :desc)
+    @send_messages = Message.where(user_id: current_user.id).order(created_at: :desc)
   end
 
   def archives
@@ -75,8 +75,7 @@ class MessagesController < ApplicationController
   private
 
     def visualized
-      if !@message.displayed && !(current_user.id == @message.user_id)
-        byebug
+      if !@message.visualized && current_user.id == @message.user_receiver_id
         @message.change_status
       end
     end
@@ -87,6 +86,6 @@ class MessagesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def message_params
-      params.require(:message).permit(:title, :user_id, :text, :displayed, :user_receiver_id, :date_view, :date_archived)
+      params.require(:message).permit(:title, :user_id, :text, :visualized, :user_receiver_id, :date_view, :date_archived)
     end
 end

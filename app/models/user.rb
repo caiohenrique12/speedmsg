@@ -7,7 +7,7 @@ class User < ApplicationRecord
   scope :list_users, -> (user_id) { where.not(id: user_id).compact }
 
   def count_messages_receiver
-    Message.where(displayed: false, user_receiver_id: id).count
+    Message.where(visualized: false, user_receiver_id: id).count
   end
 
 end

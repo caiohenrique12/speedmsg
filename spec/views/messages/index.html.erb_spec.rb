@@ -6,13 +6,13 @@ RSpec.describe "messages/index", type: :view do
       Message.create!(
         :user => nil,
         :text => "MyText",
-        :displayed => false,
+        :visualized => false,
         :user_receiver_id => 2
       ),
       Message.create!(
         :user => nil,
         :text => "MyText",
-        :displayed => false,
+        :visualized => false,
         :user_receiver_id => 2
       )
     ])
