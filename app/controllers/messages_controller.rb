@@ -12,7 +12,7 @@ class MessagesController < ApplicationController
   end
 
   def archives
-    @archives = Message.where("user_receiver_id = ? AND archive = true", current_user.id).order(created_at: :desc)
+    @archives = Message.where(user_receiver_id: current_user.id).order(created_at: :desc)
   end
 
   # GET /messages/1
