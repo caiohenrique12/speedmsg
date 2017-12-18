@@ -12,6 +12,9 @@
  *
  *= require_tree .
  *= require_self
+ *= require messenger
+  *= require messenger-spinner
+  *= require messenger-theme-future
  */
 a:link {
   text-decoration: none;

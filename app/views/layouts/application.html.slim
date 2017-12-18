@@ -44,10 +44,16 @@ html
           .col-md-9
             .box.box-primary
               .box-header.with-border
-                p#notice
-                  = notice
                 = yield
     - else
-      p#notice
-        = notice
       = yield
+  
+    = yield :js
+  	- if notice
+  		javascript:
+  			Messenger.options = { extraClasses: 'messenger-fixed messenger-on-top messenger-on-right alert', theme: 'flat' };
+  			Messenger().post("#{notice}");
+  	- elsif alert
+  		javascript:
+  			Messenger.options = { extraClasses: 'messenger-fixed messenger-on-top messenger-on-right alert', theme: 'flat' };
+  			Messenger().post({message: "#{alert}", type: 'error'});
