@@ -18,7 +18,7 @@
       table.table.table-hover.table-striped
         tbody
           - @receive_messages.each do |message|
-            - bold = "bold" unless message.try(:displayed)
+            - bold = "bold" unless message.try(:visualized)
             tr
               td = check_box_tag "messages[]", message.id, false, class: 'destroy'
               td.mailbox-subject = message.user.nickname
