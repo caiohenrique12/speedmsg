@@ -5,36 +5,40 @@
     h3.box-title Inbox
     hr
 
-    = form_tag archive_messages_path, method: :post do
+    = form_with url: archive_messages_path, method: :post do |f|
       .box-body.no-padding
         .mailbox-controls
-      button.btn.btn-default.btn-sm.checkbox-toggle type="button"
-        i.fa.fa-square-o
+      button#check-all.btn.btn-default.btn-sm type="button"
+        i.fa.fa-check-square-o
       .btn-group
-        button.btn.btn-default.btn-sm type="submit" data-remote="true"
+        button.btn.btn-default.btn-sm type="submit"
           i.fa.fa-trash-o
       /! /.btn-group
       button.btn.btn-default.btn-sm type="button"
         i.fa.fa-refresh
 
       = hidden_field_tag "action_origin", "inbox_message"
-      table.table.table-hover.table-striped id="message"
+      table.table.table-hover.table-striped
         tbody
           - @receive_messages.each do |message|
             - bold = "bold" unless message.try(:displayed)
-            tr.destroy
-              td = check_box_tag "messages[]", message.id
+            tr
+              td = check_box_tag "messages[]", message.id, false, class: 'destroy'
               td.mailbox-subject = message.user.nickname
               td class="mailbox-name title #{bold}" = link_to  "#{message.title}", message_path(message)
               td = message.status_message
-              td = message.created_at
+              td = message.created_at.strftime("%d/%m/%Y - %H:%M")
   br
   .form-group
     = link_to 'Nova Messagem', new_message_path, class: 'btn btn-primary btn-flat'
 
 javascript:
-  $("#message").on("ajax:success", ".destroy", function(event, data, status, xhr) {
-    $(event.target).parent().parent().fadeOut("slow", function () {
-      $(this).remove()
-    });
+  $("form").on("ajax:success", function(event, data, status, xhr) {
+   $('.destroy:checked').parent().parent().fadeOut("slow", function () {
+     $(this).remove()
+   });
+  });
+
+  $("#check-all").click(function(){
+    $('.destroy').prop('checked', !$('.destroy')[0].checked);
   });

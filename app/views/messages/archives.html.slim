@@ -10,8 +10,8 @@
           tr.destroy
             td.mailbox-subject = message.user.nickname == current_user.nickname ? "Você" : message.user.nickname
             td.mailbox-name.title = link_to "#{message.title}", message_path(message)
-            td Criado em #{message.created_at}
-            td Arquivado em #{message.date_archived}
+            td Criado em #{message.created_at.strftime("%d/%m/%Y - %H:%M")}
+            td Arquivado em #{message.date_archived.strftime("%d/%m/%Y - %H:%M")}
     br
     .form-group
       = link_to 'Voltar', inbox_messages_path, class: 'btn btn-default btn-flat'

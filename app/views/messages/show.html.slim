@@ -5,7 +5,7 @@
     p
       small De: #{@message.user.email}
     h2 #{@message.title}
-    span.mailbox-read-time.pull-right #{@message.created_at}
+    span.mailbox-read-time.pull-right #{@message.created_at.strftime("%d/%m/%Y - %H:%M")}
   .mailbox-read-message
     h2 #{@message.text}
 
